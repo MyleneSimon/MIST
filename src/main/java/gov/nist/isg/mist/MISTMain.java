@@ -225,12 +225,16 @@ public class MISTMain implements PlugIn {
     // if this is being run from command line
     if(args.length > 0) {
 
+      MISTMain.macroOptions = parseCommandLineOptions(args);
+      
+      if(MISTMain.macroOptions == null) {
+    	  return;
+      }
+      
       Log.msg(LogType.VERBOSE,"MISTMain.main: parsing args");
       for(int i = 0; i < args.length; i++) {
         Log.msg(LogType.MANDATORY,args[i]);
       }
-
-      MISTMain.macroOptions = parseCommandLineOptions(args);
       
       MISTMain.macro = false;
       MISTMain.runHeadless = false;
@@ -282,25 +286,25 @@ public class MISTMain implements PlugIn {
 	   // add input parameter names to list of options
 	   List<String> inputParameterNames = InputParameters.getParameterNamesList();
 	   for (String param : inputParameterNames) {
-		   options.addOption(param, "Input param " + param);
+		   options.addOption(null, param, true, "Input param " + param);
 	   }
 	   
 	   // add output parameter names to list of options
 	   List<String> outputParameterNames = OutputParameters.getParameterNamesList();
 	   for (String param : outputParameterNames) {
-		   options.addOption(param, "Output param " + param);
+		   options.addOption(null, param, true, "Output param " + param);
 	   }
 	   
 	   // add logging parameter names to list of options
 	   List<String> loggingParameterNames = LoggingParameters.getParameterNamesList();
 	   for (String param : loggingParameterNames) {
-		   options.addOption(param, "Logging param " + param);
+		   options.addOption(null, param, true, "Logging param " + param);
 	   }
 	   
 	   // add advanced parameter names to list of options
 	   List<String> advancedParameterNames = AdvancedParameters.getParameterNamesList();
 	   for (String param : advancedParameterNames) {
-		   options.addOption(param, "Advanced param " + param);
+		   options.addOption(null, param, true, "Advanced param " + param);
 	   }
 	   
 	   String macroParams = "";
@@ -310,7 +314,7 @@ public class MISTMain implements PlugIn {
 
            if (commandLine.hasOption(helpOption.getOpt())) {
                printHelp(options);
-               return "";
+               return null;
            }
            
            for (Option option : commandLine.getOptions()) {
@@ -320,6 +324,7 @@ public class MISTMain implements PlugIn {
        } catch (ParseException ex) {
            System.err.println(ex.getMessage());
            printHelp(options);
+           return null;
        }
 	   
 	   return macroParams;
