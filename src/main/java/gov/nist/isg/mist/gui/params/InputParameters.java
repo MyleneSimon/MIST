@@ -809,6 +809,7 @@ public class InputParameters implements StitchingAppParamFunctions {
 	  	parameterNames.add(IMAGE_DIR);
 	  	parameterNames.add(FILENAME_PATTERN);
 	  	parameterNames.add(FILENAME_PATTERN_TYPE);
+	  	parameterNames.add(GRID_ORIGIN);
 	  	parameterNames.add(NUMBERING_PATTERN);
 	  	parameterNames.add(ASSEMBLE_FROM_META);
 	  	parameterNames.add(START_ROW);
