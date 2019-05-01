@@ -224,7 +224,7 @@ public class MISTMain implements PlugIn {
     // if this is being run from command line
     if(args.length > 0) {
 
-      Log.msg(LogType.VERBOSE,"MISTMain.main: parsing args");
+      Log.msg(LogType.VERBOSE,"MISTMain.main: parsing args and converting to macro params");
       MISTMain.macroOptions = parseCommandLineOptions(args);
       
       if(MISTMain.macroOptions == null) {
@@ -313,7 +313,7 @@ public class MISTMain implements PlugIn {
            }
            
            for (Option option : commandLine.getOptions()) {
-        	   String param = option.getLongOpt() + "=" + commandLine.getOptionValue(option.getLongOpt()) + " ";
+        	   String param = option.getLongOpt().toLowerCase() + "=" + commandLine.getOptionValue(option.getLongOpt()) + " ";
         	   Log.msg(LogType.MANDATORY, param);
 			   macroParams += param;
            }
