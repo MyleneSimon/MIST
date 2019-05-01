@@ -217,23 +217,18 @@ public class MISTMain implements PlugIn {
   /**
    * Main entry point for executing
    *
-   * @param args not used
+   * @param args
    */
   public static void main(String[] args) {
-
 
     // if this is being run from command line
     if(args.length > 0) {
 
+      Log.msg(LogType.VERBOSE,"MISTMain.main: parsing args");
       MISTMain.macroOptions = parseCommandLineOptions(args);
       
       if(MISTMain.macroOptions == null) {
     	  return;
-      }
-      
-      Log.msg(LogType.VERBOSE,"MISTMain.main: parsing args");
-      for(int i = 0; i < args.length; i++) {
-        Log.msg(LogType.MANDATORY,args[i]);
       }
       
       MISTMain.macro = false;
@@ -318,7 +313,9 @@ public class MISTMain implements PlugIn {
            }
            
            for (Option option : commandLine.getOptions()) {
-        	   macroParams += option.getLongOpt() + "=" + option.getValue() + " ";
+        	   String param = option.getLongOpt() + "=" + commandLine.getOptionValue(option.getLongOpt()) + " ";
+        	   Log.msg(LogType.MANDATORY, param);
+			   macroParams += param;
            }
 
        } catch (ParseException ex) {
